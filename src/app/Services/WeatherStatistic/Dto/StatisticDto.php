@@ -6,5 +6,7 @@ namespace App\Services\WeatherStatistic\Dto;
 
 class StatisticDto
 {
-    public string $count = '';
+    public string $status;
+    public string $error;
+    public string $mostPopularProvider;
 }

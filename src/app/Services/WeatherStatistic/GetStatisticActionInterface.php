@@ -7,5 +7,5 @@ use DateTimeInterface;
 
 interface GetStatisticActionInterface
 {
-    public function execute(DateTimeInterface $dateTime): StatisticDto;
+    public function execute(string $period): StatisticDto;
 }

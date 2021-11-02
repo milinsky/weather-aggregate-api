@@ -28,7 +28,7 @@ class GetWeatherController extends Controller
             $this->request->get('provider'),
             $this->request->get('city')
         );
-        Event::dispatch(new WeatherByCityRequestedEvent($averageWeatherDto));
+        !$averageWeatherDto->error ?? Event::dispatch(new WeatherByCityRequestedEvent($averageWeatherDto));
         return response()->json($averageWeatherDto);
     }
 }

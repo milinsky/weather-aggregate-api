@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Weather\Dto;
 
-class AverageWeatherDto extends CommonDto
+class AverageWeatherDto
 {
     public string $status;
     public string $provider;
