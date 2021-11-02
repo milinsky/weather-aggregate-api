@@ -31,9 +31,21 @@ class GetAverageWeatherByCityAction implements GetWeatherActionInterface
 
     public function execute(string $providerName, string $city): AverageWeatherDto
     {
-        $providers = Config::get('weather.providers');
-
         $averageWeatherDto = new AverageWeatherDto();
+
+        if (empty($providerName)) {
+            $averageWeatherDto->status = StatusEnum::FAIL;
+            $averageWeatherDto->error = ErrorEnum::VALUE_FOR_PROVIDER_PASSED_ERROR;
+            return $averageWeatherDto;
+        }
+
+        if (empty($city)) {
+            $averageWeatherDto->status = StatusEnum::FAIL;
+            $averageWeatherDto->error = ErrorEnum::VALUE_FOR_CITY_PASSED_ERROR;
+            return $averageWeatherDto;
+        }
+
+        $providers = Config::get('weather.providers');
 
         if (!isset($providers[$providerName])) {
             $averageWeatherDto->status = StatusEnum::FAIL;
@@ -57,6 +69,7 @@ class GetAverageWeatherByCityAction implements GetWeatherActionInterface
             return $averageWeatherDto;
         }
 
+        $averageWeatherDto->status = StatusEnum::SUCCESS;
         $averageWeatherDto->city = $geoPositionDto->city;
         $averageWeatherDto->provider = $providerName;
         $averageWeatherDto->temperature = $allProvidersWeathers[$providerName]->temperature;

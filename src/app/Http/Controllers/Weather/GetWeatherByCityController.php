@@ -11,7 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Http\Request;
 
-class GetWeatherController extends Controller
+class GetWeatherByCityController extends Controller
 {
     private GetWeatherActionInterface $getWeatherAction;
     private Request $request;
@@ -25,10 +25,10 @@ class GetWeatherController extends Controller
     public function __invoke(): JsonResponse
     {
         $averageWeatherDto = $this->getWeatherAction->execute(
-            $this->request->get('provider'),
-            $this->request->get('city')
+            $this->request->get('provider', ''),
+            $this->request->get('city', '')
         );
-        !$averageWeatherDto->error ?? Event::dispatch(new WeatherByCityRequestedEvent($averageWeatherDto));
+        Event::dispatch(new WeatherByCityRequestedEvent($averageWeatherDto));
         return response()->json($averageWeatherDto);
     }
 }
