@@ -22,11 +22,7 @@ class GetStatisticController extends Controller
 
     public function __invoke(): JsonResponse
     {
-        $dateTime = new \DateTime('now');
-        $dateTime->modify( '-1 ' . $this->request->get('period'))->format('Y-m-d');
-
-        $statisticDto = $this->getStatisticAction->execute($dateTime);
-
+        $statisticDto = $this->getStatisticAction->execute($this->request->get('period', ''));
         return response()->json($statisticDto);
     }
 }
