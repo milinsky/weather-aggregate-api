@@ -23,7 +23,7 @@ class GetStatisticActionPopularWeatherRequestsAction implements GetStatisticActi
     {
         $statisticDto = new StatisticDto();
         $statisticData = $this->statisticRepository->getRecent($dateTime);
-        $statisticDto->count = (string) array_shift($statisticData);
+        $statisticDto->count = (string) array_shift($statisticData[0]['topK(1)(provider_name)']);
         return $statisticDto;
     }
 }

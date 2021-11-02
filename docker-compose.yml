@@ -25,7 +25,7 @@ services:
 
   db:
     hostname: clickhouse
-    image: lunalabsltd/clickhouse-server:21.7.2.7-arm
+    image: clickhouse/clickhouse-server:latest
     ports:
       - 8123:8123
     volumes:
