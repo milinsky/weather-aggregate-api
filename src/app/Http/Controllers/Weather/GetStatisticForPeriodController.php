@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Weather;
 
 use App\Http\Controllers\Controller;
-use App\Services\WeatherStatistic\GetStatisticActionInterface;
+use App\Services\Weather\GetStatisticActionInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

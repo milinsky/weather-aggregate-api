@@ -57,6 +57,7 @@ class GetAverageWeatherByCityAction implements GetWeatherActionInterface
             return $averageWeatherDto;
         }
 
+        $averageWeatherDto->status = StatusEnum::SUCCESS;
         $averageWeatherDto->city = $geoPositionDto->city;
         $averageWeatherDto->provider = $providerName;
         $averageWeatherDto->temperature = $allProvidersWeathers[$providerName]->temperature;

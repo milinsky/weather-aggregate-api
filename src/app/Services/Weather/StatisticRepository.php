@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\WeatherStatistic;
+namespace App\Services\Weather;
 
 use DateTimeInterface;
 use Illuminate\Support\Facades\DB;

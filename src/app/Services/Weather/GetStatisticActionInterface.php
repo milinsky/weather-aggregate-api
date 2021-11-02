@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\WeatherStatistic;
+namespace App\Services\Weather;
 
-use App\Services\WeatherStatistic\Dto\StatisticDto;
+use App\Services\Weather\Dto\StatisticDto;
 use DateTimeInterface;
 
 interface GetStatisticActionInterface

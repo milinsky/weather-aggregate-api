@@ -25,10 +25,10 @@ class GetWeatherByCityController extends Controller
     public function __invoke(): JsonResponse
     {
         $averageWeatherDto = $this->getWeatherAction->execute(
-            $this->request->get('provider'),
-            $this->request->get('city')
+            $this->request->get('provider', ''),
+            $this->request->get('city', '')
         );
-        !$averageWeatherDto->error ?? Event::dispatch(new WeatherByCityRequestedEvent($averageWeatherDto));
+        Event::dispatch(new WeatherByCityRequestedEvent($averageWeatherDto));
         return response()->json($averageWeatherDto);
     }
 }

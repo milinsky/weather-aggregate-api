@@ -6,10 +6,10 @@ use App\Services\Weather\Providers\NominatomGeoProvider;
 use App\Services\Weather\Contracts\GeoProviderInterface;
 use App\Services\Weather\GetWeatherActionInterface;
 use App\Services\Weather\Actions\GetAverageWeatherByCityAction;
-use App\Services\WeatherStatistic\AddStatisticDataInterface;
-use App\Services\WeatherStatistic\GetStatisticActionInterface;
-use App\Services\WeatherStatistic\Actions\AddStatisticRequestDataWeatherAction;
-use App\Services\WeatherStatistic\Actions\GetStatisticPopularWeatherRequestsAction;
+use App\Services\Weather\AddStatisticDataActionInterface;
+use App\Services\Weather\GetStatisticActionInterface;
+use App\Services\Weather\Actions\AddStatisticRequestDataActionWeatherAction;
+use App\Services\Weather\Actions\GetStatisticPopularWeatherRequestsAction;
 use App\Http\Controllers\Weather\GetWeatherByCityController;
 use App\Http\Controllers\Weather\GetStatisticForPeriodController;
 use App\Listeners\WeatherByCityRequestedEventListener;
@@ -44,9 +44,9 @@ class AppServiceProvider extends ServiceProvider
             });
 
         $this->app->when(WeatherByCityRequestedEventListener::class)
-                  ->needs(AddStatisticDataInterface::class)
+                  ->needs(AddStatisticDataActionInterface::class)
                   ->give(function ($app) {
-                      return $app->make(AddStatisticRequestDataWeatherAction::class);
+                      return $app->make(AddStatisticRequestDataActionWeatherAction::class);
             });
     }
 }

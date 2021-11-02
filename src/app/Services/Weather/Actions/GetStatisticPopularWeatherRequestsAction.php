@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Services\WeatherStatistic\Actions;
+namespace App\Services\Weather\Actions;
 
-use App\Services\WeatherStatistic\Dto\StatisticDto;
-use App\Services\WeatherStatistic\Enum\ErrorEnum;
-use App\Services\WeatherStatistic\Enum\PeriodTypeEnum;
-use App\Services\WeatherStatistic\Enum\StatusEnum;
-use App\Services\WeatherStatistic\GetStatisticActionInterface;
-use App\Services\WeatherStatistic\StatisticRepository;
-use ErrorException;
+use App\Services\Weather\Dto\StatisticDto;
+use App\Services\Weather\Enum\ErrorEnum;
+use App\Services\Weather\Enum\PeriodTypeEnum;
+use App\Services\Weather\Enum\StatusEnum;
+use App\Services\Weather\GetStatisticActionInterface;
+use App\Services\Weather\StatisticRepository;
 use DateTime;
 
 use function array_shift;
@@ -44,6 +43,7 @@ class GetStatisticPopularWeatherRequestsAction implements GetStatisticActionInte
         $dateTime->modify( '-1 ' . $period);
 
         $statisticData = $this->statisticRepository->getRecent($dateTime);
+        $statisticDto->status = StatusEnum::SUCCESS;
         $statisticDto->mostPopularProvider = (string) array_shift($statisticData[0]['topK(1)(provider_name)']);
 
         return $statisticDto;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\WeatherStatistic\Enum;
+namespace App\Services\Weather\Enum;
 
 class PeriodTypeEnum
 {
