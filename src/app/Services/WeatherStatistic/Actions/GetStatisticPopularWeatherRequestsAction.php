@@ -44,6 +44,7 @@ class GetStatisticPopularWeatherRequestsAction implements GetStatisticActionInte
 
         $statisticData = $this->statisticRepository->getRecent($dateTime);
         $statisticDto->mostPopularProvider = (string) array_shift($statisticData[0]['topK(1)(provider_name)']);
+
         return $statisticDto;
     }
 }
