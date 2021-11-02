@@ -5,28 +5,28 @@ services:
   nginx:
     image: nginx:latest
     ports:
-    - 127.0.0.1:80:80
+      - 80:80
     volumes:
-    - ./src:/var/www/project
-    - ./config/nginx:/etc/nginx/conf.d
-    - ./logs/nginx:/var/log/nginx
+      - ./src:/var/www/project
+      - ./config/nginx:/etc/nginx/conf.d
+      - ./logs/nginx:/var/log/nginx
     links:
-    - php-fpm
+      - php-fpm
 
   php-fpm:
     build:
       context: php-fpm
     ports:
-    - 127.0.0.1:9000:9000
+      - 9000:9000
     volumes:
-    - ./src:/var/www/project
+      - ./src:/var/www/project
     links:
-    - db
+      - db
 
   db:
-    image: clickhouse/clickhouse-server:latest
+    hostname: clickhouse
+    image: lunalabsltd/clickhouse-server:21.7.2.7-arm
     ports:
-    - 127.0.0.1:8123:8123
-    restart: always
+      - 8123:8123
     volumes:
-    - ./databases/clickhouse:/opt/clickhouse/data
+      - ./databases/clickhouse:/var/lib/clickhouse
