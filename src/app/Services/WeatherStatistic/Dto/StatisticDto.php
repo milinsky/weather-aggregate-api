@@ -8,5 +8,5 @@ class StatisticDto
 {
     public string $status;
     public string $error;
-    public string $mustPopularProvider;
+    public string $mostPopularProvider;
 }
