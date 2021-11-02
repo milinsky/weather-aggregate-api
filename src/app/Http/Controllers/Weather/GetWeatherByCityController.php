@@ -11,7 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Http\Request;
 
-class GetWeatherController extends Controller
+class GetWeatherByCityController extends Controller
 {
     private GetWeatherActionInterface $getWeatherAction;
     private Request $request;

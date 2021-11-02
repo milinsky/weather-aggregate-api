@@ -7,7 +7,7 @@ namespace App\Services\WeatherStatistic\Actions;
 use App\Services\WeatherStatistic\AddStatisticDataInterface;
 use App\Services\WeatherStatistic\StatisticRepository;
 
-class AddRequestDataWeatherAction implements AddStatisticDataInterface
+class AddStatisticRequestDataWeatherAction implements AddStatisticDataInterface
 {
     private StatisticRepository $statisticRepository;
 

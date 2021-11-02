@@ -9,7 +9,7 @@ use App\Services\WeatherStatistic\GetStatisticActionInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class GetStatisticController extends Controller
+class GetStatisticForPeriodController extends Controller
 {
     private GetStatisticActionInterface $getStatisticAction;
     private Request $request;

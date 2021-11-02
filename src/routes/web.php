@@ -13,6 +13,6 @@
 |
 */
 
-$router->get('/weather', 'GetWeatherController');
-$router->get('/weather/statistic', 'GetStatisticController');
+$router->get('/weather', 'GetWeatherByCityController');
+$router->get('/weather/statistic', 'GetStatisticForPeriodController');
 
