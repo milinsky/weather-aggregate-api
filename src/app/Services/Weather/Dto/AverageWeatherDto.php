@@ -11,5 +11,5 @@ class AverageWeatherDto
     public string $city;
     public float $temperature;
     public float $averageTemperature;
-    public string $error;
+    public string $error = '';
 }
