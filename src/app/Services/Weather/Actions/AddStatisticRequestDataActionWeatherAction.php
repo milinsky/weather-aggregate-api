@@ -20,7 +20,8 @@ class AddStatisticRequestDataActionWeatherAction implements AddStatisticDataActi
 
     public function execute(AverageWeatherDto $averageWeatherDto): void
     {
-        $averageWeatherDto->status === StatusEnum::SUCCESS ??
-        $this->statisticRepository->add($averageWeatherDto->provider);
+        if ($averageWeatherDto->status === StatusEnum::SUCCESS) {
+            $this->statisticRepository->add($averageWeatherDto->city);
+        }
     }
 }

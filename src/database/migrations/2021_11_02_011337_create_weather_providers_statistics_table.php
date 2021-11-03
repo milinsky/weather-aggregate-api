@@ -13,10 +13,10 @@ class CreateWeatherProvidersStatisticsTable extends Migration
     public function up()
     {
         static::write('
-            CREATE TABLE weather_providers_statistics (
+            CREATE TABLE weather_requests_statistics (
                 id UInt32,
                 created_at DateTime,
-                provider_name String
+                city String
             )
             ENGINE = MergeTree()
             ORDER BY (id)
@@ -30,6 +30,6 @@ class CreateWeatherProvidersStatisticsTable extends Migration
      */
     public function down()
     {
-        static::write('DROP TABLE weather_providers_statistics');
+        static::write('DROP TABLE weather_requests_statistics');
     }
 }
