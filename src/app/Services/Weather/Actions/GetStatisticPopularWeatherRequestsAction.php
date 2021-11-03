@@ -42,10 +42,18 @@ class GetStatisticPopularWeatherRequestsAction implements GetStatisticActionInte
         $dateTime = new DateTime('NOW');
         $dateTime->modify( '-1 ' . $period);
 
-        $statisticData = $this->statisticRepository->getRecent($dateTime);
+        $statisticData = $this->statisticRepository->getRecentByPeriod($dateTime);
         $statisticDto->status = StatusEnum::SUCCESS;
-        $statisticDto->mostPopularProvider = (string) array_shift($statisticData[0]['topK(1)(provider_name)']);
+        $statisticDto->mostPopularRequests = $statisticData;
 
         return $statisticDto;
+    }
+
+    private function getMostPopular(array $statisticData): array
+    {
+        $countValues = array_count_values($statisticData);
+        $normalList = array_flip($countValues);
+        krsort($normalList);
+        return $normalList;
     }
 }
