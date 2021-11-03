@@ -44,7 +44,7 @@ class GetStatisticPopularWeatherRequestsAction implements GetStatisticActionInte
 
         $statisticData = $this->statisticRepository->getRecentByPeriod($dateTime);
         $statisticDto->status = StatusEnum::SUCCESS;
-        $statisticDto->mostPopularRequests = $statisticData;
+        $statisticDto->mostPopularRequests = $this->getMostPopular($statisticData);
 
         return $statisticDto;
     }
