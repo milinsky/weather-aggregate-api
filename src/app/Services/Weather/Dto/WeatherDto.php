@@ -6,7 +6,16 @@ namespace App\Services\Weather\Dto;
 
 class WeatherDto
 {
-    public string $status;
-    public string $city;
+    private string $status;
     public float $temperature;
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
+    }
 }

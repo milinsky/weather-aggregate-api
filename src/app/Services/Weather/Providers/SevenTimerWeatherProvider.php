@@ -41,12 +41,11 @@ class SevenTimerWeatherProvider implements WeatherProviderInterface
         $weatherData = array_shift($weatherData->dataseries);
 
         if ($result->getStatusCode() !== Response::HTTP_OK) {
-            $weatherDto->status = StatusEnum::FAIL;
+            $weatherDto->setStatus(StatusEnum::FAIL);
             return $weatherDto;
         }
 
-        $weatherDto->city = $geoPositionDto->city;
-        $weatherDto->status = StatusEnum::SUCCESS;
+        $weatherDto->setStatus(StatusEnum::SUCCESS);
         $weatherDto->temperature = $weatherData->temp2m;
 
         return $weatherDto;

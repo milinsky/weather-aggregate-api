@@ -39,12 +39,11 @@ class OpenMeteoWeatherProvider implements WeatherProviderInterface
         $weatherData = json_decode($result->getBody()->getContents());
 
         if (property_exists($weatherData, 'error') || $result->getStatusCode() !== Response::HTTP_OK) {
-            $weatherDto->status = StatusEnum::FAIL;
+            $weatherDto->setStatus(StatusEnum::FAIL);
             return $weatherDto;
         }
 
-        $weatherDto->city = $geoPositionDto->city;
-        $weatherDto->status = StatusEnum::SUCCESS;
+        $weatherDto->setStatus(StatusEnum::SUCCESS);
         $weatherDto->temperature = $weatherData->current_weather->temperature;
 
         return $weatherDto;

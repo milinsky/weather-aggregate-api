@@ -9,5 +9,5 @@ use App\Services\Weather\Exceptions\ProviderNotFoundException;
 
 interface GetWeatherActionInterface
 {
-    public function execute(string $providerName, string $city): AverageWeatherDto;
+    public function execute(string $city): AverageWeatherDto;
 }
