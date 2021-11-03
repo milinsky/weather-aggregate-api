@@ -34,7 +34,7 @@ class StatisticRepository
         $this->createTable($client);
 
         $statement = $client->select('
-            SELECT *
+            SELECT city
             FROM weather_requests_statistics
             WHERE created_at < :created_at',
             ['created_at' => $dateTime->getTimestamp()]
