@@ -12,7 +12,9 @@ use App\Services\Weather\GetStatisticActionInterface;
 use App\Services\Weather\StatisticRepository;
 use DateTime;
 
-use function array_shift;
+use function in_array;
+use function array_count_values;
+use function arsort;
 
 class GetStatisticPopularWeatherRequestsAction implements GetStatisticActionInterface
 {
@@ -51,9 +53,16 @@ class GetStatisticPopularWeatherRequestsAction implements GetStatisticActionInte
 
     private function getMostPopular(array $statisticData): array
     {
-        $countValues = array_count_values($statisticData);
-        $normalList = array_flip($countValues);
-        krsort($normalList);
-        return $normalList;
+        $listData = [];
+
+        foreach ($statisticData as $data) {
+            $listData[] = $data['city'];
+        }
+
+        $countValues = array_count_values($listData);;
+
+        arsort($countValues);
+
+        return $countValues;
     }
 }
