@@ -36,7 +36,7 @@ class StatisticRepository
         $statement = $client->select('
             SELECT city
             FROM weather_requests_statistics
-            WHERE created_at < :created_at',
+            WHERE created_at > :created_at',
             ['created_at' => $dateTime->getTimestamp()]
          );
         return $statement->rows();
@@ -48,13 +48,12 @@ class StatisticRepository
     private function createTable(Client $client): void
     {
         $client->write('
-             CREATE TABLE IF NOT EXISTS weather_requests_statistics (
-                 id UInt32,
-                 city String,
-                 created_at DateTime
-             )
-             ENGINE = MergeTree()
-             ORDER BY (id)
+            CREATE TABLE IF NOT EXISTS weather_requests_statistics (
+                city String,
+                created_at DateTime
+            )
+            ENGINE = MergeTree()
+            ORDER BY (created_at)
          ');
     }
 }

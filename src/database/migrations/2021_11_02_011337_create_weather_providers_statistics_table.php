@@ -14,12 +14,11 @@ class CreateWeatherProvidersStatisticsTable extends Migration
     {
         static::write('
             CREATE TABLE weather_requests_statistics (
-                id UInt32,
-                created_at DateTime,
-                city String
+                city String,
+                created_at DateTime
             )
             ENGINE = MergeTree()
-            ORDER BY (id)
+            ORDER BY (created_at)
         ');
     }
 
