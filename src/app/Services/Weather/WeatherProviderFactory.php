@@ -16,6 +16,9 @@ class WeatherProviderFactory
         $this->container = $container;
     }
 
+    /**
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
     public function create(string $className, array $params): WeatherProviderInterface
     {
         return $this->container->make($className, ['params' => $params]);

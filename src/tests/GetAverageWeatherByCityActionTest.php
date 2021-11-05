@@ -56,7 +56,7 @@ class GetAverageWeatherByCityActionTest extends TestCase
     /**
      * @test
      */
-    public function executeWithUnknownGeoPosition(): void
+    public function executeWithIndefiniteGeoPosition(): void
     {
         $action = new GetAverageWeatherByCityAction(
             $this->providerFactory,
