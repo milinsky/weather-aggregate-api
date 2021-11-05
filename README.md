@@ -1,24 +1,52 @@
-# Lumen PHP Framework
+# Weather aggregate api service
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
+## Get started
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+### Clone this repository:
 
-## Official Documentation
+``git clone https://github.com/milinsky/weather-aggregate-api.git``
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+### Go to the project directory and run container
 
-## Contributing
+`cd weather-aggregate-api.git`
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+`docker-compose build`
 
-## Security Vulnerabilities
+`docker-compose up -d`
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+For set custom application host use config `/config/nginx/default.conf` (default - localhost)
 
-## License
+## Usage
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### To get the weather for all plugged providers:
+
+``GET /weather?city={city}``
+
+### To get statistics of popular queries:
+
+Day
+
+``GET /weather/statistic?period=day``
+
+
+Month
+
+``GET /weather/statistic?period=month``
+
+
+## Plug additional weather providers
+
+### To plug additional weather providers, you need to implement the interface
+
+``App\Services\Weather\Contracts\WeatherProviderInterface``
+
+and set config in `/src/config/weather.php` in `'providers'` section
+
+Example:
+
+    'YourProviderName' => [
+        'class' => YourImplementationClassName::class,
+        'params' => [
+            'base_url' => 'http://api-url',
+        ]
+    ],

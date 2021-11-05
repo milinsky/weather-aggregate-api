@@ -28,7 +28,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->when(GetWeatherByCityController::class)
                   ->needs(GetWeatherActionInterface::class)
                   ->give(function ($app) {
-                      return $app->make(GetAverageWeatherByCityAction::class);
+                      return $app->make(
+                          GetAverageWeatherByCityAction::class,
+                          ['providers' => Config::get('weather.providers')]
+                      );
               });
 
         $this->app->when(GetStatisticForPeriodController::class)

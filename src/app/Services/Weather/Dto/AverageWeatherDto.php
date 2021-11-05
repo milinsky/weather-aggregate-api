@@ -9,6 +9,6 @@ class AverageWeatherDto
     public string $status;
     public array $providers;
     public string $city;
-    public float $averageTemperature;
+    public ?float $averageTemperature;
     public string $error;
 }

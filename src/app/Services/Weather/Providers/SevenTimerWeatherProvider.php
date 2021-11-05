@@ -37,13 +37,14 @@ class SevenTimerWeatherProvider implements WeatherProviderInterface
         $result = $this->client->get($this->baseUrl . '&' . $queryString);
 
         $weatherDto = new WeatherDto();
-        $weatherData = json_decode($result->getBody()->getContents());
-        $weatherData = array_shift($weatherData->dataseries);
 
         if ($result->getStatusCode() !== Response::HTTP_OK) {
             $weatherDto->setStatus(StatusEnum::FAIL);
             return $weatherDto;
         }
+
+        $weatherData = json_decode($result->getBody()->getContents());
+        $weatherData = array_shift($weatherData->dataseries);
 
         $weatherDto->setStatus(StatusEnum::SUCCESS);
         $weatherDto->temperature = $weatherData->temp2m;
