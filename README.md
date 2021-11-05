@@ -8,7 +8,7 @@
 
 ### Go to the project directory and run container
 
-`cd weather-aggregate-api.git`
+`cd weather-aggregate-api`
 
 `docker-compose build`
 
