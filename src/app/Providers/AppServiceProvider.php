@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Services\Weather\Providers\NominatomGeoProvider;
+use App\Services\Weather\Providers\NominatimGeoProvider;
 use App\Services\Weather\Contracts\GeoProviderInterface;
 use App\Services\Weather\GetWeatherActionInterface;
 use App\Services\Weather\Actions\GetAverageWeatherByCityAction;
@@ -43,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->when(GetAverageWeatherByCityAction::class)
                   ->needs(GeoProviderInterface::class)
                   ->give(function ($app) {
-                      return $app->make(NominatomGeoProvider::class, Config::get('weather.geo.Nominatim'));
+                      return $app->make(NominatimGeoProvider::class, Config::get('weather.geo.Nominatim'));
             });
 
         $this->app->when(WeatherByCityRequestedEventListener::class)

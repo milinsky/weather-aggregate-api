@@ -12,7 +12,6 @@ use App\Services\Weather\Dto\WeatherDto;
 
 class GetAverageWeatherByCityActionTest extends TestCase
 {
-    private GetAverageWeatherByCityAction $action;
     private WeatherProviderFactory $providerFactory;
     private GeoProviderInterface $geoProvider;
     private WeatherProviderInterface $weatherProvider;
@@ -22,7 +21,7 @@ class GetAverageWeatherByCityActionTest extends TestCase
     /**
      * @test
      */
-    public function executeWithCorrectCity(): void
+    public function executeWithCity(): void
     {
         $action = new GetAverageWeatherByCityAction(
             $this->providerFactory,
@@ -42,7 +41,7 @@ class GetAverageWeatherByCityActionTest extends TestCase
     /**
      * @test
      */
-    public function executeWithEmptyCity(): void
+    public function executeWithoutCity(): void
     {
         $action = new GetAverageWeatherByCityAction(
             $this->providerFactory,
@@ -52,6 +51,40 @@ class GetAverageWeatherByCityActionTest extends TestCase
 
         $averageWeatherDto = $action->execute('');
         $this->assertEquals($averageWeatherDto->status, StatusEnum::FAIL);
+    }
+
+    /**
+     * @test
+     */
+    public function executeWithUnknownGeoPosition(): void
+    {
+        $action = new GetAverageWeatherByCityAction(
+            $this->providerFactory,
+            $this->geoProvider,
+            $this->getValidProvidersConfigArray()
+        );
+
+        $this->geoPositionDto->status = StatusEnum::FAIL;
+        $averageWeatherDto = $action->execute('qweqweqwe');
+        $this->assertEquals($averageWeatherDto->status, StatusEnum::FAIL);
+    }
+
+    private function getValidProvidersConfigArray(): array
+    {
+        return [
+            'Provider1' => [
+                'class' => 'ClassName1',
+                'params' => [
+                    'base_url' => 'https://url1',
+                ]
+            ],
+            'Provider2' => [
+                'class' => 'ClassName2',
+                'params' => [
+                    'base_url' => 'http://url2',
+                ]
+            ],
+        ];
     }
 
     protected function setUp(): void
@@ -67,23 +100,5 @@ class GetAverageWeatherByCityActionTest extends TestCase
 
         $this->providerFactory = $this->createMock(WeatherProviderFactory::class);
         $this->providerFactory->method('create')->willReturn($this->weatherProvider);
-    }
-
-    private function getValidProvidersConfigArray(): array
-    {
-        return [
-            'OpenMeteo' => [
-                'class' => 'class',
-                'params' => [
-                    'base_url' => 'https://url1',
-                ]
-            ],
-            '7Timer' => [
-                'class' => 'class',
-                'params' => [
-                    'base_url' => 'http://url2',
-                ]
-            ],
-        ];
     }
 }

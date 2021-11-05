@@ -89,6 +89,6 @@ class GetAverageWeatherByCityAction implements GetWeatherActionInterface
             return $value->temperature;
         }, $weatherForAllProviders);
 
-        return $weatherData ? array_sum($weatherData) / count($weatherData) : null;
+        return $weatherData ? (float) array_sum($weatherData) / count($weatherData) : null;
     }
 }
