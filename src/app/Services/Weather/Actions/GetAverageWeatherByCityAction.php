@@ -12,7 +12,6 @@ use App\Services\Weather\Enum\ErrorEnum;
 use App\Services\Weather\Enum\StatusEnum;
 use App\Services\Weather\GetWeatherActionInterface;
 use App\Services\Weather\WeatherProviderFactory;
-use Illuminate\Support\Facades\Config;
 
 use function array_map;
 use function array_sum;
@@ -22,14 +21,19 @@ class GetAverageWeatherByCityAction implements GetWeatherActionInterface
 {
     private WeatherProviderFactory $weatherProviderFactory;
     private GeoProviderInterface $geoProvider;
+    private array $providers = [];
 
-    public function __construct(WeatherProviderFactory $weatherProviderFactory, GeoProviderInterface $geoProvider)
-    {
+    public function __construct(
+        WeatherProviderFactory $weatherProviderFactory,
+        GeoProviderInterface $geoProvider,
+        array $providers
+    ) {
         $this->weatherProviderFactory = $weatherProviderFactory;
         $this->geoProvider = $geoProvider;
+        $this->providers = $providers;
     }
 
-    public function execute(string $city): AverageWeatherDto
+    public function execute(string $city = ''): AverageWeatherDto
     {
         $averageWeatherDto = new AverageWeatherDto();
 
@@ -39,8 +43,6 @@ class GetAverageWeatherByCityAction implements GetWeatherActionInterface
             return $averageWeatherDto;
         }
 
-        $providers = Config::get('weather.providers');
-
         $geoPositionDto = $this->geoProvider->getGeoPositionByCity($city);
 
         if ($geoPositionDto->status === StatusEnum::FAIL) {
@@ -49,7 +51,7 @@ class GetAverageWeatherByCityAction implements GetWeatherActionInterface
             return $averageWeatherDto;
         }
 
-        $allProvidersWeathers = $this->getWeathersForAllProviders($providers, $geoPositionDto);
+        $allProvidersWeathers = $this->getWeathersForAllProviders($geoPositionDto);
 
         $averageWeatherDto->status = StatusEnum::SUCCESS;
         $averageWeatherDto->city = $geoPositionDto->city;
@@ -62,10 +64,10 @@ class GetAverageWeatherByCityAction implements GetWeatherActionInterface
     /**
      * @param array[] $providers
      */
-    protected function getWeathersForAllProviders(array $providers, GeoPositionDto $geoPositionDto): array
+    protected function getWeathersForAllProviders(GeoPositionDto $geoPositionDto): array
     {
         $allProvidersWeathers = [];
-        foreach ($providers as $providerName => $provider) {
+        foreach ($this->providers as $providerName => $provider) {
             $weatherProvider = $this->weatherProviderFactory->create($provider['class'], $provider['params']);
             $weather = $weatherProvider->getWeatherByGeoPosition($geoPositionDto);
             if ($weather->getStatus() === StatusEnum::SUCCESS) {
