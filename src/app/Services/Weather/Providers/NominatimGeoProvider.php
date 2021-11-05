@@ -14,7 +14,7 @@ use function http_build_query;
 use function json_decode;
 use function array_shift;
 
-class NominatomGeoProvider implements GeoProviderInterface
+class NominatimGeoProvider implements GeoProviderInterface
 {
     private Client $client;
     private string $baseUrl;
