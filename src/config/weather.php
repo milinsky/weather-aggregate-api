@@ -15,7 +15,7 @@ return [
         'OpenMeteo' => [
             'class' => OpenMeteoWeatherProvider::class,
             'params' => [
-                    'base_url' => 'https://api.open-meteo.com/v1/forecast?&current_weather=true',
+                'base_url' => 'https://api.open-meteo.com/v1/forecast?&current_weather=true',
             ]
         ],
         '7Timer' => [

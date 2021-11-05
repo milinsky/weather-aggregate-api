@@ -51,40 +51,43 @@ class GetAverageWeatherByCityAction implements GetWeatherActionInterface
             return $averageWeatherDto;
         }
 
-        $allProvidersWeathers = $this->getWeathersForAllProviders($geoPositionDto);
+        $weatherForAllProviders = $this->getWeatherForAllProviders($geoPositionDto);
+
+        if (empty($weatherForAllProviders)) {
+            $averageWeatherDto->status = StatusEnum::FAIL;
+            $averageWeatherDto->error = ErrorEnum::INTERNAL_ERROR;
+            return $averageWeatherDto;
+        }
 
         $averageWeatherDto->status = StatusEnum::SUCCESS;
         $averageWeatherDto->city = $geoPositionDto->city;
-        $averageWeatherDto->providers = $allProvidersWeathers;
-        $averageWeatherDto->averageTemperature = $this->calcAverage($allProvidersWeathers);
+        $averageWeatherDto->providers = $weatherForAllProviders;
+        $averageWeatherDto->averageTemperature = $this->calcAverage($weatherForAllProviders);
 
         return $averageWeatherDto;
     }
 
-    /**
-     * @param array[] $providers
-     */
-    protected function getWeathersForAllProviders(GeoPositionDto $geoPositionDto): array
+    protected function getWeatherForAllProviders(GeoPositionDto $geoPositionDto): array
     {
-        $allProvidersWeathers = [];
+        $weatherForAllProviders = [];
         foreach ($this->providers as $providerName => $provider) {
             $weatherProvider = $this->weatherProviderFactory->create($provider['class'], $provider['params']);
             $weather = $weatherProvider->getWeatherByGeoPosition($geoPositionDto);
             if ($weather->getStatus() === StatusEnum::SUCCESS) {
-                $allProvidersWeathers[$providerName] = $weather;
+                $weatherForAllProviders[$providerName] = $weather;
             }
         }
-        return $allProvidersWeathers;
+        return $weatherForAllProviders;
     }
 
     /**
-     * @param WeatherDto[] $allProvidersWeathers
+     * @param WeatherDto[] $weatherForAllProviders
      */
-    protected function calcAverage(array $allProvidersWeathers): ?float
+    protected function calcAverage(array $weatherForAllProviders): ?float
     {
         $weatherData = array_map(function ($value) {
             return $value->temperature;
-        }, $allProvidersWeathers);
+        }, $weatherForAllProviders);
 
         return $weatherData ? array_sum($weatherData) / count($weatherData) : null;
     }
