@@ -31,7 +31,7 @@ class GetStatisticPopularWeatherRequestsAction implements GetStatisticActionInte
 
         if (empty($period)) {
             $statisticDto->status = StatusEnum::FAIL;
-            $statisticDto->error = ErrorEnum::VALUE_FOR_RERIOD_PASSED_ERROR;
+            $statisticDto->error = ErrorEnum::VALUE_FOR_PERIOD_PASSED_ERROR;
             return $statisticDto;
         }
 
