@@ -8,7 +8,7 @@ use App\Services\Weather\GetWeatherActionInterface;
 use App\Services\Weather\Actions\GetAverageWeatherByCityAction;
 use App\Services\Weather\AddStatisticDataActionInterface;
 use App\Services\Weather\GetStatisticActionInterface;
-use App\Services\Weather\Actions\AddStatisticRequestDataActionWeatherAction;
+use App\Services\Weather\Actions\AddStatisticRequestDataWeatherAction;
 use App\Services\Weather\Actions\GetStatisticPopularWeatherRequestsAction;
 use App\Http\Controllers\Weather\GetWeatherByCityController;
 use App\Http\Controllers\Weather\GetStatisticForPeriodController;
@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->when(WeatherByCityRequestedEventListener::class)
                   ->needs(AddStatisticDataActionInterface::class)
                   ->give(function ($app) {
-                      return $app->make(AddStatisticRequestDataActionWeatherAction::class);
+                      return $app->make(AddStatisticRequestDataWeatherAction::class);
             });
     }
 }

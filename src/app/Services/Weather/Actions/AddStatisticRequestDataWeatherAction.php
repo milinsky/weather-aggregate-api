@@ -9,7 +9,7 @@ use App\Services\Weather\Enum\StatusEnum;
 use App\Services\Weather\StatisticRepository;
 use App\Services\Weather\Dto\AverageWeatherDto;
 
-class AddStatisticRequestDataActionWeatherAction implements AddStatisticDataActionInterface
+class AddStatisticRequestDataWeatherAction implements AddStatisticDataActionInterface
 {
     private StatisticRepository $statisticRepository;
 
